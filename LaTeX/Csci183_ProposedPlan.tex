@@ -1,0 +1,152 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Thin Sectioned Essay
+% LaTeX Template
+% Version 1.0 (3/8/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original Author:
+% Nicolas Diaz (nsdiaz@uc.cl) with extensive modifications by:
+% Vel (vel@latextemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt]{article} % Font size (can be 10pt, 11pt or 12pt) and paper size (remove a4paper for US letter paper)
+
+\usepackage[protrusion=true,expansion=true]{microtype} % Better typography
+\usepackage{graphicx} % Required for including pictures
+\usepackage{wrapfig} % Allows in-line images
+\usepackage{amsmath,amsthm,amssymb,textcomp}
+\usepackage{lmodern} % Use the Palatino font
+\usepackage[T1]{fontenc} % Required for accented characters
+\linespread{1.05} % Change line spacing here, Palatino benefits from a slight increase by default
+
+\makeatletter
+\renewcommand\@biblabel[1]{\textbf{#1.}} % Change the square brackets for each bibliography item from '[1]' to '1.'
+\renewcommand{\@listI}{\itemsep=0pt} % Reduce the space between items in the itemize and enumerate environments and the bibliography
+
+%\renewcommand\abstractname{Proposed Idea} % Rename abstract section to 'Proposed Idea'
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+
+\renewcommand{\maketitle}{ % Customize the title - do not edit title and author name here, see the TITLE block below
+ % Right align
+  \begin{flushright}
+
+
+	{\LARGE\@title} % Increase the font size of the title
+
+%\begin{center}
+	\vspace{50pt} % Some vertical space between the title and author name
+
+	{\large\@author} % Author name
+	\\\@date % Date
+
+	\vspace{40pt} % Some vertical space between the author block and abstract
+%\end{center}
+\end{flushright}
+}
+
+
+%----------------------------------------------------------------------------------------
+%	TITLE
+%----------------------------------------------------------------------------------------
+
+\title{\textbf{Logistic Regression Spam Filtering}\\ % Title
+Csci 183: Final Project} % Subtitle
+\author{\textsc{R. Johnson, G. Nguyen, R. Young} % Author
+\\{\textit{Santa Clara Univeristy}}} % Institution
+
+\date{\today} % Date
+
+%----------------------------------------------------------------------------------------
+% HEADERS & FOOTERS
+
+%\usepackage{fancyhdr}
+%\pagestyle{fancy}
+%\fancyhf{}
+%\rfoot{rtjohnson@scu.edu, ryoung@scu.edu, bbekes@scu.edu}
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Print the title section
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT AND KEYWORDS
+%----------------------------------------------------------------------------------------
+
+%\renewcommand{\abstractname}{Summary} % Uncomment to change the name of the abstract to something else
+
+\begin{abstract}
+Spam messages are a nuisance to everyone. In this day and age, people encounter short messages, such as SMS or other messaging applications on a day to day basis.  Spam must also take on a short form in order to be deliverable on these platforms.  As a result, classifying a  message as spam may present a more difficult task as there are less words in the message to work with.  The goal of our project is to use logistic regression in order to determine if a short message should be classified as spam or not. This will involve training our algorithm to identify which terms are most likely to be associated with spam (i.e. 'FREE', 'CASH', links, etc). Then, we will use our trained algorithm to categorize a test set of messages as spam or not spam.
+\end{abstract}
+
+\hspace*{3,6mm}\textit{Keywords:} spam , sms , email , filtering , classification , logistic regression % Keywords
+
+\vspace{10pt} % Some vertical space between the abstract and first section
+
+\section*{Goal}
+
+To predict whether a message is spam or not.
+\begin{enumerate}
+	\item[Training Phase:] Get data from email messages that are already categorized spam/ham. Train data based on hypothesis function $h_\theta(x)=g(\theta^Tx) = \frac{1}{1+e^{-\theta^Tx}}$. If $h_\theta(x)$ is close to 1, then it would belong to the spam class. Otherwise, we will classify it as ham.
+	\item[Test Phase:] Given an email message, predict whether it is spam or ham. Check if the hypothesis function is closer to 0 or 1. Use this to classify the data.
+\end{enumerate}
+%----------------------------------------------------------------------------------------
+%	ESSAY BODY
+%----------------------------------------------------------------------------------------
+
+\section*{Proposed Plan}
+
+\textbf{Language:} Python \newline
+\textbf{Data Source:} https://archive.ics.uci.edu/ml/datasets/SMS+Spam+Collection \newline
+\textbf{Algorithm(s):} Logistic Regression \newline
+\textbf{Worload Distribution:} \newline
+\tab Raya: Data Munging and Cleaning \newline
+\tab Ryan: Algorithm Development \newline
+\tab Grace: Final Project Development \newline
+
+%This statement requires citation \cite{Smith:2012qr}; this one does too \cite{Smith:2013jd}. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean dictum lacus sem, ut varius ante dignissim ac. Sed a mi quis lectus feugiat aliquam. Nunc sed vulputate velit. Sed commodo metus vel felis semper, quis rutrum odio vulputate. Donec a elit porttitor, facilisis nisl sit amet, dignissim arcu. Vivamus accumsan pellentesque nulla at euismod. Duis porta rutrum sem, eu facilisis mi varius sed. Suspendisse potenti. Mauris rhoncus neque nisi, ut laoreet augue pretium luctus. Vestibulum sit amet luctus sem, luctus ultrices leo. Aenean vitae sem leo.
+
+%------------------------------------------------
+
+\section*{Proposed Timeline}
+
+\begin{enumerate}
+	\item[May 10$^{\text{th}}$:] Project Proposal Due (await feedback from Dr. Manna).
+	\item[May 11$^{\text{th}}$- 15$^{\text{th}}$:] Finish up preliminary research, data gathering, finalizing which libraries/algorithms to use.
+	\item[May 15$^{\text{th}}$- 24$^{\text{th}}$:] Each member works on their portion of code.
+	\item[May 24$^{\text{th}}$- 30$^{\text{th}}$:] Combine code and test algorithm on test data, finalize code.
+	\item[May 31$^{\text{st}}$-June 4$^{\text{th}}$:] Prepare project write-up and presentation.
+	\item[June 5$^{\text{th}}$- 9$^{\text{th}}$:] Project due. Presentation is prepared by this time. 
+\end{enumerate}
+ 
+%------------------------------------------------
+
+\section*{Contact}
+Ryan Johnson: rtjohnson@scu.edu\\
+G. Nguyen: gnguyen@scu.edu\\
+Raya Young: rlyoung@scu.edu
+
+
+
+%----------------------------------------------------------------------------------------
+%	BIBLIOGRAPHY
+%----------------------------------------------------------------------------------------
+
+\section*{References}
+
+1. Spam Filtering for Short Messages \newline
+\tab https://pdfs.semanticscholar.org/d457/4461f72712c025df14d1a3d4d73ef86ed23b.pdf
+
+
+%----------------------------------------------------------------------------------------
+\end{document}
