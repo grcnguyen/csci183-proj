@@ -5,40 +5,50 @@
 # ### Spam Filtering for Short Messages: Naive Bayes
 # #### Ryan Johnson, Grace Nguyen, and Raya Young
 
-# In[10]:
 
 #!usr/bin/env/python
-
 import sklearn as sk
 import CreateFeatureMatrix
 import nltk
-from nltk.tokenize import TweetTokenizer
-from sklearn.naive_bayes import MultinomialNB
+import pandas as pd
+from itertools import chain
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem.snowball import SnowballStemmer
 
 # Define training function:
-
-# In[11]:
+def clean(sent):
+    clean_sent = ""
+    stemmed = ""
+    stop = set(stopwords.words('english'))
+    stemmer = SnowballStemmer('english')
+    for word in sent:
+        if word not in stop:
+            if isinstance(word, str):
+                word.lower()
+            stemmed = stemmed + word
+            clean_sent = clean_sent + word
+    return clean_sent
 
 from CreateFeatureMatrix import getset
 training_set = CreateFeatureMatrix.getset()
 
-#tokenize set
-#all_words = set(word.lower() for passage in training_set for word in word_tokenize(passage[0]))
-#tokens = [({word: (word in word_tokenize(x[0])) for word in all_words}, x[1]) for x in training_set]
+#half of the dataset will be used for training and the other half will be used for testing
+length = len(training_set)/2
+test_set = training_set[:int(length)]
+training_set = training_set[int(length):]
 #print(training_set)
+
+vocab = set(chain(*[word_tokenize(i[0].lower()) for i in training_set]))
+training_set = [({word: (word in word_tokenize(x[0])) for word in vocab}, x[1]) for x in training_set]
+
 classifier = nltk.NaiveBayesClassifier.train(training_set)
-classifier.show_most_informative_features()
+#classifier.show_most_informative_features()
 
-tkn = TweetTokenizer()
-test_sentence = "Check out this message now. is it ham is it spam? Who knows"
-test_set_feat = tkn.tokenize(test_sentence)
-classifier.classify(test_set_feat)
-#print "%.3f" % nltk.classify.accuracy(cl, test_set)
-#cl.show_most_informative_features(40)
-#cl.prob_classify(featurize(name)) # get a confidence for the prediction
-
-
-# In[ ]:
-
+for sentence in test_set:
+    test_sentence = clean(sentence[0])
+    test_set_feat = {i:(i in word_tokenize(test_sentence.lower())) for i in vocab}
+    answer = classifier.classify(test_set_feat)
+    print("Answer: " + answer + ", Actual: " + sentence[1])
 
 
