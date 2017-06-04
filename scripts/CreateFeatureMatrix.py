@@ -1,35 +1,38 @@
-
-# coding: utf-8
-
-# ## CSCI 183 Data Science
-# ### Spam Filtering for Short Messages: Features Matrix
-# #### Ryan Johnson, Grace Nguyen, and Raya Young
-# 
-# 
-# 
-
-# In[2]:
-
+import sklearn as sk
+import nltk
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import io
+from itertools import chain
+from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem.snowball import SnowballStemmer
 
-
-# #### Import the test data 
-# Separate into two arrays: spam and ham. These arrays will be processed individually in order to generate word clouds.
-
-data = pd.read_csv("../training-data/reduced_set.tsv", sep='\t', names = ["Category", "Message"])
+data = pd.read_csv("../training-data/spamcollectiondata.tsv", sep='\t', names = ["Category", "Message"])
 data.head()
 
-# #### Converting to lowercase
-message_data = [str(word).lower() for word in data['Message']]
+d2_messages = list()
+d2_cats = list()
+with open("../training-data/english_big.csv", "r", errors='ignore') as test:
+    lines = test.readlines()
+    np.random.shuffle(lines)
+    for l in lines:
+        words = l.split(",")
+        message = ""
+        for w in words:
+            if w == 'ham\n' or w=='spam\n':
+                d2_messages.append(message)
+                if w == 'ham\n':
+                    d2_cats.append('ham')
+                else:
+                    d2_cats.append('spam')
+            else:
+                message = message + w
+
+message_data = [word.lower() for word in data['Message']]
 category = data['Category'].tolist()
 
-# #### Stopword removal and Stemming
-# Clean both sets of data by removing stopwords. This way, the word cloud will not be completely populated by common stop words. Stemming is also important to ensure eliminate the possibility of having multiple different forms of words.
+message_data.extend(d2_messages)
+category.extend(d2_cats)
 
 stop = set(stopwords.words('english'))
 stemmer = SnowballStemmer('english')
@@ -50,5 +53,3 @@ for message in message_data:
 
 def getset():
     return training_set
-
-

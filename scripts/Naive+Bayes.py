@@ -45,10 +45,17 @@ training_set = [({word: (word in word_tokenize(x[0])) for word in vocab}, x[1]) 
 classifier = nltk.NaiveBayesClassifier.train(training_set)
 #classifier.show_most_informative_features()
 
+total = 0
+correct = 0
 for sentence in test_set:
     test_sentence = clean(sentence[0])
     test_set_feat = {i:(i in word_tokenize(test_sentence.lower())) for i in vocab}
     answer = classifier.classify(test_set_feat)
+    if answer == sentence[1]:
+        correct = correct + 1
     print("Answer: " + answer + ", Actual: " + sentence[1])
+    total = total + 1
+
+print("Accuracy = ", float(correct)/float(total)*100)
 
 
