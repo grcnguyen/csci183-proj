@@ -7,9 +7,11 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem.snowball import SnowballStemmer
 
+#Open dataset 1 (ham-heavy)
 data = pd.read_csv("../training-data/spamcollectiondata.tsv", sep='\t', names = ["Category", "Message"])
 data.head()
 
+#Open dataset 2 (more spam)
 d2_messages = list()
 d2_cats = list()
 with open("../training-data/english_big.csv", "r", errors='ignore') as test:
@@ -28,12 +30,15 @@ with open("../training-data/english_big.csv", "r", errors='ignore') as test:
             else:
                 message = message + w
 
+#Lowercase message1 data and separate category
 message_data = [word.lower() for word in data['Message']]
 category = data['Category'].tolist()
 
+#Append two message lists together
 message_data.extend(d2_messages)
 category.extend(d2_cats)
 
+#stopword removal and stemming
 stop = set(stopwords.words('english'))
 stemmer = SnowballStemmer('english')
 training_set = []
