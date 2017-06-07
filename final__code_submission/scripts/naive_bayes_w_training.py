@@ -42,7 +42,8 @@ print("...Tokenizing and setting up vocab list")
 vocab = set(chain(*[word_tokenize(i[0].lower()) for i in training_set]))
 training_set = [({word: (word in word_tokenize(x[0])) for word in vocab}, x[1]) for x in training_set]
 
-print("...Loading classifier")
+f = open('scripts/nb_classifier.pickle', 'rb')
+print("...Saving classifier")
 pickle.dump(classifier, f)
 f.close()
 
