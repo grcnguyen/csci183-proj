@@ -16,6 +16,6 @@ log_reg.main()
 confusion_matrix_lg.main()
 
 #Naive Bayes
-naive_bayes_pre_trained.main()
 confusion_matrix_nb.main()
+naive_bayes_pre_trained.main()
 
